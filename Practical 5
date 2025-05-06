@@ -1,0 +1,47 @@
+1. Subqueries
+-- Find Transporters Who Have a Vehicle Capacity Greater Than the Average
+SELECT * 
+FROM Transporter 
+WHERE Capacity > (SELECT AVG(Capacity) FROM Transporter);
+
+-- Find Transporters Operating in the Same Location as 'Rajesh Logistics'
+SELECT * 
+FROM Transporter 
+WHERE Location = (SELECT Location FROM Transporter WHERE Name = 'Rajesh Logistics');
+
+-- Find the Transporter with the Highest Vehicle Capacity
+SELECT * 
+FROM Transporter 
+WHERE Capacity = (SELECT MAX(Capacity) FROM Transporter);
+
+2. Joins
+-- INNER JOIN: Fetch Farmers Who Use a Specific Transporter
+SELECT f.* 
+FROM Farmer f
+INNER JOIN Transporter t ON f.TransporterID = t.TransporterID
+WHERE t.Name = 'Specific Transporter Name';  -- Replace with actual transporter name
+
+-- INNER JOIN between cotton and farmer
+SELECT * 
+FROM Cotton c
+INNER JOIN Farmer f ON c.FarmerID = f.FarmerID;
+
+-- LEFT JOIN between bales and ginning_factory
+SELECT * 
+FROM Bales b
+LEFT JOIN Ginning_Factory g ON b.FactoryID = g.FactoryID;
+
+-- RIGHT JOIN between yarn and ginner
+SELECT * 
+FROM Yarn y
+RIGHT JOIN Ginner g ON y.GinnerID = g.GinnerID;
+
+-- FULL OUTER JOIN between spinner and yarn
+SELECT * 
+FROM Spinner s
+FULL OUTER JOIN Yarn y ON s.SpinnerID = y.SpinnerID;
+
+-- NATURAL JOIN between cotton and farmer (only if both have FarmerID)
+SELECT * 
+FROM Cotton 
+NATURAL JOIN Farmer;
